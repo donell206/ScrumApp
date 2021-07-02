@@ -1,0 +1,102 @@
+﻿
+
+@model Kamban.ViewModels.ScrumBoard
+
+
+@{
+    ViewBag.Title = "Index";
+
+
+}
+<body>
+<div class="scrum-content">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+
+            <h3 style="text-decoration: underline;">Not CheckedOut</h3>
+            @foreach (var item in Model.NotCheckedOutTasks)
+            {
+                <div class="card bg-danger text-white" style="margin-top: 10px">
+                    
+                    <div class="card-body">
+                        <div class="card-title">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </div>
+                        <div class="card-text">
+                            @Html.DisplayFor(modelItem => item.Description)
+                            <a asp-action="Update" asp-route-id="@item.ScrumTaskId" asp-route-cat="checked" class="card-link">checked</a>
+                        </div>
+                        <div class="card-footer">
+                            Check this task out
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <h3 style="text-decoration: underline;">CheckedOut</h3>
+            @foreach (var item in Model.CheckedOutTasks)
+            {
+                <div class="card bg-warning text-white" style="margin-top: 10px">
+                    
+                    <div class="card-body">
+                        <div class="card-title">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </div>
+                        <div class="card-text">
+                            @Html.DisplayFor(modelItem => item.Description)
+                            <br />
+                            <a asp-action="Update" asp-route-id="@item.ScrumTaskId" asp-route-cat="notchecked" class="card-link">not checked</a>
+                            <a asp-action="Update" asp-route-id="@item.ScrumTaskId" asp-route-cat="done" class="card-link">done</a>
+                        </div>
+                        <div class="card-header">
+                            Checked out by @Html.DisplayFor(modelItem => item.User.Name)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <h3 style="text-decoration: underline;">Done</h3>
+            @foreach (var item in Model.DoneTasks)
+            {
+                <div class="card bg-success text-white" style="margin-top: 10px">
+
+                    <div class="card-body">
+                        <div class="card-title">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </div>
+                        <div class="card-text">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </div>
+                        <div class="card-header">
+                            Completed by @Html.DisplayFor(modelItem => item.User.Name)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<form asp-action="Create" asp-route-userid="@Model.User">
+    <div class="form-group">
+        
+        <span asp-validation-for="Task.Category" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Task.Title" class="control-label"></label>
+        <input asp-for="Task.Title" class="form-control" />
+        <span asp-validation-for="Task.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Task.Description" class="control-label"></label>
+        <input asp-for="Task.Description" class="form-control" />
+        <span asp-validation-for="Task.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+</body>
+

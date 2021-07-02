@@ -1,0 +1,17 @@
+﻿@model Kamban.ViewModels.UserVM
+
+@{ 
+    ViewData["Title"] = "Index";
+}
+
+<form asp-controller="ScrumTask" asp-action="Index" asp-route-user="@Model.User">
+    <label for="first-name">Who are you?</label><br>
+    <select asp-for="@Model.User" asp-items="@(new SelectList(Model.Users,"UserId","Name"))">
+
+        <option value="">---Please select a Cursist---</option>
+    </select><br><br>
+
+    <input type="submit" value="Submit" class="btn btn-primary" />
+
+</form>
+<p>Not in the list?</p>
